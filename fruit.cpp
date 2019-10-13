@@ -9,12 +9,12 @@ Fruit::Fruit(Snake snake, LedControl _screen){
     x = random(8);
     y = random(8);
 
-        for (byte i = 0; i < snake.size; i++) {
+        /*for (byte i = 0; i < snake.size; i++) {
             if ((snake.dots[i][0] == x) && (snake.dots[i][1] == y)) {
                 flag = true;
                 break;
             }
-        }
+        }*/
     }
    _screen.setLed(0,x,y,true); 
 }

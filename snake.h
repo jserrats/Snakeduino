@@ -3,23 +3,40 @@
 
 #include <LedControl.h>
 #define SIZE 8
-#define MAX_LENGTH SIZE*SIZE
+#define MAX_LENGTH SIZE *SIZE
+struct node
+{
+    int x,y;
+    node *next;
+};
 
-class Snake 
+class Snake
 {
 private:
-    enum directions {RIGHT, UP, DOWN, LEFT};
-    byte first = 0;
-    byte last = size - 1;
+    enum directions
+    {
+        RIGHT,
+        UP,
+        DOWN,
+        LEFT
+    };
     directions current = UP;
+    node *head, *tail;
+    void insert_start(int x, int y);
+    void insert_last(int x, int y);
+    void delete_last();
 
-public:
-//    byte dots[MAX_LENGTH][2] = {{3, 3}, {4, 3}, {5, 3}, {6, 3}, {7, 3}};
-    byte dots[MAX_LENGTH][2] = {{3, 3}};
-    byte size = 1;
+public: 
+    Snake();
     void print(LedControl screen);
-    void updateDirection();
     void move(LedControl screen);
+    void updateDirection();
+
+    list()
+    {
+      head=NULL;
+      tail=NULL;
+    }
 };
 
 #endif

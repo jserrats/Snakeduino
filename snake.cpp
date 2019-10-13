@@ -1,13 +1,21 @@
 #include "snake.h"
-#define X 0
-#define Y 1
+
+Snake::Snake()
+{
+    insert_last(3, 3);
+    insert_last(4, 3);
+}
 
 void Snake::print(LedControl screen)
 {
-    for (int i = 0; i < size; i++)
+    screen.clearDisplay(0);
+
+    node *temp = new node;
+    temp = head;
+    while (temp != NULL)
     {
-        screen.setLed(0, dots[i][X], dots[i][Y], true);
-        //Serial.println("Printing X: " +dots[i][X] + " Y: "+ dots[i][Y]);
+        screen.setLed(0, temp->x, temp->y, true);
+        temp = temp->next;
     }
 }
 
@@ -16,29 +24,53 @@ void Snake::move(LedControl screen)
     switch (current)
     {
     case UP:
-        dots[last][X] = (dots[first][X] + SIZE - 1) % SIZE;
-        dots[last][Y] = dots[first][Y];
-        break;
-    case LEFT:
-        dots[last][Y] = (dots[first][Y] + SIZE - 1) % SIZE;
-        dots[last][X] = dots[first][X];
-        break;
-    case RIGHT:
-        dots[last][Y] = (dots[first][Y] + 1) % SIZE;
-        dots[last][X] = dots[first][X];
-        break;
-    case DOWN:
-        dots[last][X] = (dots[first][X] + 1) % SIZE;
-        dots[last][Y] = dots[first][Y];
-        break;
+        insert_start((head->x + SIZE -1)% SIZE , head->y);    
     }
+    delete_last();
+}
 
-    screen.setLed(0,dots[last][X], dots[last][Y],false);
+/* add a new node at the tail*/
+void Snake::insert_last(int x, int y)
+{
+    node *temp = new node;
+    temp->x = x;
+    temp->y = y;
+    temp->next = NULL;
+    if (head == NULL)
+    {
+        head = temp;
+        tail = temp;
+        temp = NULL;
+    }
+    else
+    {
+        tail->next = temp;
+        tail = temp;
+    }
+}
 
-    first = (first + size - 1) % size;
-    last = (last + size - 1) % size;
+void Snake::insert_start(int x, int y)
+{
+    node *temp = new node;
+    temp->x = x;
+    temp->y = y;
+    temp->next = head;
+    head = temp;
+}
 
-    print(screen);
+void Snake::delete_last()
+{
+    node *current = new node;
+    node *previous = new node;
+    current = head;
+    while (current->next != NULL)
+    {
+        previous = current;
+        current = current->next;
+    }
+    tail = previous;
+    previous->next = NULL;
+    delete current;
 }
 
 void Snake::updateDirection()
@@ -63,5 +95,5 @@ void Snake::updateDirection()
         current = LEFT;
     }
 
-    Serial.print(current);
+    //Serial.print(current);
 }
