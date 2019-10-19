@@ -3,7 +3,7 @@
 Snake::Snake()
 {
     insert_last(3, 3);
-    insert_last(4, 3);
+    serialDebug();
 }
 
 void Snake::print(LedControl screen)
@@ -19,14 +19,26 @@ void Snake::print(LedControl screen)
     }
 }
 
+void Snake::serialDebug()
+{
+    Serial.print("head x: ");
+    Serial.print(head->x);
+    Serial.print(" head y: ");
+    Serial.println(head->y);
+    Serial.print("tail x: ");
+    Serial.print(tail->x);
+    Serial.print(" tail y: ");
+    Serial.println(tail->y);
+    Serial.println();
+}
 void Snake::move(LedControl screen)
 {
-    switch (current)
-    {
-    case UP:
-        insert_start((head->x + SIZE -1)% SIZE , head->y);    
-    }
+    // UP
+    insert_start((head->x + SIZE - 1) % SIZE, head->y);
     delete_last();
+    print(screen);
+    serialDebug();
+
 }
 
 /* add a new node at the tail*/

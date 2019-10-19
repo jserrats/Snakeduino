@@ -25,13 +25,13 @@ private:
     void insert_start(int x, int y);
     void insert_last(int x, int y);
     void delete_last();
-
+    
 public: 
     Snake();
     void print(LedControl screen);
     void move(LedControl screen);
     void updateDirection();
-
+    void serialDebug();
     list()
     {
       head=NULL;
